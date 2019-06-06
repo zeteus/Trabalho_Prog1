@@ -8,10 +8,10 @@
 *     > JORDANA SARMENGHI SALAMON       *
 *                                       *
 * MATERIA:                              *
-*     > PROGRAMACAO 1 - 2019/01         *
+*     > PROGRAMACAO 1                   *
 *                                       *
 * CURSO:                                *
-*     > CIENCIA DA COMPUTACAO           *
+*     > CIÊNCIA DA COMPUTAÇÃO - 2019/1  *
 *                                       *
 * TRABALHO:                             *
 *     > ROBOZIN DO SAMU                 *
@@ -96,7 +96,7 @@ OBJETIVO: Funcao que mostra o robo que percorreu a maior distancia
 INPUTS: a definir
 OUTPUT: A distancia e o ID do robo "mais cansado"
 '''
-def robotMostTired(lista):
+def robo_maior_dist(lista):
     ## a definir essa funcao
     return 1;
 
@@ -111,3 +111,6 @@ def robotMostTired(lista):
 * PARTE D *
 * * * * * *
 '''
+
+def ID_mais_vitimas():
+    return lista_IDs
