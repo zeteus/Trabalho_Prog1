@@ -114,3 +114,18 @@ def robo_maior_dist(lista):
 
 def ID_mais_vitimas():
     return lista_IDs
+
+
+'''
+EXEMPLO DE ENTRADA:
+
+[('robo3', 1, (7, 7), 3), ('robo4', 2, (7, 5), 2), ('robo3', 3, (5, 4), 3), ('robo3', 4, (8, 1), 4), ('robo4',
+5, (4, 5), 3), ('robo5', 6, (7, 7), 4), ('robo5', 7, (6, 4), 5), ('robo3', 8, (7, 2), 3), ('robo5', 9, (6, 4), 4)]
+
+
+[(id, instanteAreaAfetada, ponto, vitimasNaVisibilidade)...]
+
+
+-> Um robô não pode estar em dois pontos no mesmo instante
+    if (id1 == id2 and ponto1 != ponto2): intante1 tem que ser =! de instante2
+'''
