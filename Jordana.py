@@ -23,6 +23,122 @@
 from math import sqrt
 from functools import reduce
 
+'''FUNCOES FULL GLOBAIS'''
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna o ID do robo do primeiro elemento de uma lista dada
+INPUTS: Uma lista 'list' do modelo [('ID_1', Time, (P1, P2), People), ('ID_2', ...), ... , ('ID_n', ...)]
+OUTPUT: Retorna o ID do robo referente a primeira tupla de uma lista
+'''
+def get_ID(list):
+    return list[0][0]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna o Tempo do primeiro elemento de uma lista dada
+INPUTS: Uma lista 'list' do modelo [('ID', Time_1, (P1, P2), People), (..., Time_2, ...), ... , (..., Time_n, ...)]
+OUTPUT: Retorna o Tempo referente a primeira tupla de uma lista
+'''
+def get_Time(list):
+    return list[0][1]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna o Local de acidente do primeiro elemento de uma lista dada
+INPUTS: Uma lista 'list' do modelo [('ID', Time_1, (P1, P2), People), (..., (X1, X2), ...), ... , (..., (Y1, Y2), ...)]
+OUTPUT: Retorna o Local do acidente referente a primeira tupla de uma lista
+'''
+def get_Locate(list):
+    return list[0][2]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna o numero de pessoas avistadas do primeiro elemento de uma lista dada
+INPUTS: Uma lista 'list' do modelo [('ID', Time_1, (P1, P2), People), (..., People), ... , (..., People)]
+OUTPUT: Retorna o numero de pessoas avisatadas referente a primeira tupla de uma lista
+'''
+def get_People(list):
+    return list[0][3]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna o primeiro elemento de uma lista
+INPUTS: Uma lista 'list'
+OUTPUT: Retorna o primeiro elemento de uma lista
+'''
+def first_list(list):
+    return lista[0]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna todos os elementos menos o primeiro de uma lista
+INPUTS: Uma lista 'list'
+OUTPUT: Retorna todos os elementos menos o primeiro de uma lista
+'''
+def rest_list(list):
+    return lista[1:]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
+OBJETIVO: Funcao que gera uma lista somente com as informacoes do ID do robo dado como entrada
+INPUTS: Uma string 'ID_robo_alvo' para robo alvo da lista, Uma Lista 'lista_geral' para as informacoes de entrada geral
+OUTPUT: Retorna uma lista com todas as informacoes do robo alvo
+'''
+def gera_lista_robo_alvo(ID_robo_alvo, lista_geral):
+        if lista_geral == []:
+            return []
+        elif get_ID(lista_geral) == ID_robo_alvo:
+            return [first_list(lista_geral)] + gera_lista_robo_alvo(ID_robo_alvo, rest_list(lista_geral))
+        else:
+            return gera_lista_robo_alvo(ID_robo_alvo, lista_geral[1:])
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
+OBJETIVO: Funcao que gera uma lista somente com os Tempos do(os) robo(os) da lista de entrada
+INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
+OUTPUT: Retorna uma lista com os Tempos do(os) robo(os)
+'''
+def gera_lista_Time(lista_alvo):
+        if lista_alvo == []:
+            return []
+        else:
+            return [get_Time(lista_alvo)] + gera_lista_Time(rest_list(lista_alvo))
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
+OBJETIVO: Funcao que gera uma lista somente com os locais acidentados do(os) robo(os) da lista de entrada
+INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
+OUTPUT: Retorna uma lista com os locais acidentados do(os) robo(os)
+'''
+def gera_lista_Locate(lista_alvo):
+        if lista_alvo == []:
+            return []
+        else:
+            return [get_Locate(lista_alvo)] + gera_lista_Locate(rest_list(lista_alvo))
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
+OBJETIVO: Funcao que gera uma lista somente com as pessoas avistadas do(os) robo(os) da lista de entrada
+INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
+OUTPUT: Retorna uma lista com as pessoas avistadas do(os) robo(os)
+'''
+def gera_lista_People(lista_alvo):
+        if lista_alvo == []:
+            return []
+        else:
+            return [get_Peopĺe(lista_alvo)] + gera_lista_People(rest_list(lista_alvo))
+
+
 '''==============================================================================================================''
 * * * * * *
 * PARTE A *
@@ -30,7 +146,7 @@ from functools import reduce
 '''
 
 '''
-FUNCAO AUXILIAR DE QUESTAO A PARAMETRICA:
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
 OBJETIVO: Funcao que retorna a coordenada 'X' de um ponto
 INPUTS: Uma Tupla 'p' para um ponto
 OUTPUT: Retorna o primeiro elemento da Tupla
@@ -40,7 +156,7 @@ def returnXpoint(p):
 
 
 '''
-FUNCAO AUXILIAR DE QUESTAO A PARAMETRICA:
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
 OBJETIVO: Funcao que retorna a coordenada 'Y' de um ponto
 INPUTS: Uma Tupla 'p' para um ponto
 OUTPUT: Retorna o segundo elemento da Tupla
@@ -50,7 +166,7 @@ def returnYpoint(p):
 
 
 '''
-FUNCAO AUXILIAR DE QUESTAO A PARAMETRICA:
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
 OBJETIVO: Funcao que calcula e retorna a distancia entre dois pontos
 INPUTS: Uma Tupla 'p1' para o primeiro ponto, Uma Tupla 'p2' para o segundo ponto
 OUTPUT: Retorna a distancia entre os pontos de entrada
@@ -60,14 +176,14 @@ def distPoint(p1, p2):
 
 
 '''
-FUNCAO AUXILIAR DE QUESTAO A PARAMETRICA:
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
 OBJETIVO: Funcao que soma os valores de uma lista
 INPUTS: Uma Lista 'l' para os numeros a serem somados
 OUTPUT: Retorna o somatoria da lista de entrada
 '''
 def somatorio(lista):
     '''
-    FUNCAO AUXILIAR DE SOMATORIO PARAMETRICA:
+    FUNCAO AUXILIAR PARAMETRICA DE SOMATORIO:
     OBJETIVO: Somar dois numeros de entrada
     INPUTS: Uma Variavel 'n1' para numero 1 e uma Variavel 'n2' para numero 2
     OUTPUT: Retorna a soma
@@ -77,12 +193,18 @@ def somatorio(lista):
     
     return reduce(somaNum, lista)
 
+
 '''
 FUNCAO PRINCIPAL DA QUESTAO A:
 OBJETIVO: Calcula a distancia percorrida por um robo especifico
 INPUTS: Uma Lista 'l' com as informacoes do robo
 OUTPUT: Retorna a distancia percorrida
 '''
+def distPercorridaRobo(ID_robo_alvo, lista_geral):
+    lista_robo = gera_lista_robo_alvo(ID_robo_alvo, lista_geral)
+    lista_Locate = gera_lista_Locate(lista_robo)
+    print(lista_Locate)
+
 
 '''==============================================================================================================''
 * * * * * *
@@ -91,14 +213,14 @@ OUTPUT: Retorna a distancia percorrida
 '''
 
 '''
-FUNCAO AUXILIAR DE QUESTAO B PARAMETRICA:
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'B':
 OBJETIVO: Funcao que mostra o robo que percorreu a maior distancia
 INPUTS: a definir
 OUTPUT: A distancia e o ID do robo "mais cansado"
 '''
 def robo_maior_dist(lista):
     ## a definir essa funcao
-    return 1;
+    return 1
 
 '''==============================================================================================================''
 * * * * * *
@@ -112,8 +234,8 @@ def robo_maior_dist(lista):
 * * * * * *
 '''
 
-def ID_mais_vitimas():
-    return lista_IDs
+# def ID_mais_vitimas():
+#     return lista_IDs
 
 
 '''
