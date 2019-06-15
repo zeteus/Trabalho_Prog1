@@ -150,6 +150,27 @@ def gera_lista_People(lista_alvo):
             return [get_Peopĺe(lista_alvo)] + gera_lista_People(rest_list(lista_alvo))
 
 
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'B':
+OBJETIVO: Funcao que gera uma lista sem elementos repetidos da lista de entrada
+INPUTS: Uma Lista 'lista' com elementos a serem avaliados
+OUTPUT: Retorna uma lista sem os elementos repetidos
+'''
+def retira_repetidos(lista):
+    if len(lista) == 0:
+        return []
+    elif first_list(lista) in rest_list(lista):
+        return retira_repetidos(rest_list(lista))
+    else:
+        return [first_list(lista)] + retira_repetidos(rest_list(lista))
+
+
+def retiraRepetidas(lista):
+  if len(lista) == 0: return []
+  elif lista[-1] in lista[:-1]: return retiraRepetidas(lista[:-1])
+  else: return retiraRepetidas(lista[:-1]) + [lista[-1]]
+
+
 '''==============================================================================================================''
 * * * * * *
 * PARTE A *
@@ -239,11 +260,10 @@ OBJETIVO: Funcao que mostra o robo que percorreu a maior distancia
 INPUTS: a definir
 OUTPUT: A distancia e o ID do robo "mais cansado"
 '''
-def robo_maior_dist(lista):
-    ## a definir essa funcao
-    return 1
+def robo_maior_dist(lista_geral):
+    return retiraRepetidas(get_ID(lista_geral))
 
-'''==============================================================================================================''
+'''==============================================================================================================''[ 'robo3', 'robo4', 'robo3', 'robo5', 'robo5', 'robo6']
 * * * * * *
 * PARTE C *
 * * * * * *
@@ -262,7 +282,7 @@ def robo_maior_dist(lista):
 
 '''TESTES'''
 lista_teste = [('robo3', 1, (7, 7), 3), ('robo4', 2, (7, 5), 2), ('robo3', 3, (5, 4), 3), ('robo3', 4, (8, 1), 4), ('robo4', 5, (4, 5), 3), ('robo5', 6, (7, 7), 4), ('robo5', 7, (6, 4), 5), ('robo3', 8, (7, 2), 3), ('robo5', 9, (6, 4), 4)]
-print(distPercorridaRobo('robo3', lista_teste))
+print(robo_maior_dist(lista_teste))
 
 '''
 [(id, instanteAreaAfetada, ponto, vitimasNaVisibilidade)...]
