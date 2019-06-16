@@ -66,6 +66,17 @@ def get_People(lista):
     return lista[0][3]
 
 
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que retorna o tamanho da lista
+INPUTS: Uma lista 'lista'
+OUTPUT: Retorna o tamanho da lista de entrada
+'''
+def tamanho_list(lista):
+    return len(lista)
+
+
 '''
 FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
 OBJETIVO: Funcao que acessa e retorna o primeiro elemento de uma lista
@@ -74,6 +85,16 @@ OUTPUT: Retorna o primeiro elemento de uma lista
 '''
 def first_list(lista):
     return lista[0]
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que acessa e retorna o ultimo elemento de uma lista
+INPUTS: Uma lista 'lista'
+OUTPUT: Retorna o ultimo elemento de uma lista
+'''
+def last_list(lista):
+    return lista[-1]
 
 
 '''
@@ -97,18 +118,44 @@ def rest_list(lista):
 
 
 '''
+FUNCAO AUXILIAR PARAMETRICA DE TODAS AS QUESTOES:
+OBJETIVO: Funcao que verifica se a lista de entrada esta vazia
+INPUTS: Uma lista 'lista'
+OUTPUT: Retorna 'True' se a lista for vazia e 'False' caso contrario
+'''
+def lista_vazia(lista):
+    if lista == []:
+        return True
+    else:
+        return False
+
+
+'''
 FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
 OBJETIVO: Funcao que gera uma lista somente com as informacoes do ID do robo dado como entrada
 INPUTS: Uma string 'ID_robo_alvo' para robo alvo da lista, Uma Lista 'lista_geral' para as informacoes de entrada geral
 OUTPUT: Retorna uma lista com todas as informacoes do robo alvo
 '''
 def gera_lista_robo_alvo(ID_robo_alvo, lista_geral):
-        if lista_geral == []:
-            return []
+        if lista_vazia(lista_geral):
+            return lista_geral
         elif get_ID(lista_geral) == ID_robo_alvo:
             return [first_list(lista_geral)] + gera_lista_robo_alvo(ID_robo_alvo, rest_list(lista_geral))
         else:
-            return gera_lista_robo_alvo(ID_robo_alvo, lista_geral[1:])
+            return gera_lista_robo_alvo(ID_robo_alvo, rest_list(lista_geral))
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'A':
+OBJETIVO: Funcao que gera uma lista somente com os Tempos do(os) robo(os) da lista de entrada
+INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
+OUTPUT: Retorna uma lista com os Tempos do(os) robo(os)
+'''
+def gera_lista_robo(lista_alvo):
+        if lista_vazia(lista_alvo):
+            return lista_alvo
+        else:
+            return [get_ID(lista_alvo)] + gera_lista_robo(rest_list(lista_alvo))
 
 
 '''
@@ -118,8 +165,8 @@ INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
 OUTPUT: Retorna uma lista com os Tempos do(os) robo(os)
 '''
 def gera_lista_Time(lista_alvo):
-        if lista_alvo == []:
-            return []
+        if lista_vazia(lista_alvo):
+            return lista_alvo
         else:
             return [get_Time(lista_alvo)] + gera_lista_Time(rest_list(lista_alvo))
 
@@ -131,8 +178,8 @@ INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
 OUTPUT: Retorna uma lista com os locais acidentados do(os) robo(os)
 '''
 def gera_lista_Locate(lista_alvo):
-        if lista_alvo == []:
-            return []
+        if lista_vazia(lista_alvo):
+            return lista_alvo
         else:
             return [get_Locate(lista_alvo)] + gera_lista_Locate(rest_list(lista_alvo))
 
@@ -144,8 +191,8 @@ INPUTS: Uma Lista 'lista_geral' para as informacoes de entrada geral
 OUTPUT: Retorna uma lista com as pessoas avistadas do(os) robo(os)
 '''
 def gera_lista_People(lista_alvo):
-        if lista_alvo == []:
-            return []
+        if lista_vazia(lista_alvo):
+            return lista_alvo
         else:
             return [get_Peopĺe(lista_alvo)] + gera_lista_People(rest_list(lista_alvo))
 
@@ -157,18 +204,12 @@ INPUTS: Uma Lista 'lista' com elementos a serem avaliados
 OUTPUT: Retorna uma lista sem os elementos repetidos
 '''
 def retira_repetidos(lista):
-    if len(lista) == 0:
+    if tamanho_list(lista) == 0:
         return []
     elif first_list(lista) in rest_list(lista):
         return retira_repetidos(rest_list(lista))
     else:
         return [first_list(lista)] + retira_repetidos(rest_list(lista))
-
-
-def retiraRepetidas(lista):
-  if len(lista) == 0: return []
-  elif lista[-1] in lista[:-1]: return retiraRepetidas(lista[:-1])
-  else: return retiraRepetidas(lista[:-1]) + [lista[-1]]
 
 
 '''==============================================================================================================''
@@ -256,12 +297,30 @@ def distPercorridaRobo(ID_robo_alvo, lista_geral):
 
 '''
 FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'B':
+OBJETIVO: Funcao calcula e retorna as distancias entre o ponto de origem e a ultima localizacao dos robos
+INPUTS: lista de entrada geral e uma lista dos robos da lista geral
+OUTPUT: As distancias da origem e do ultimo local de cada robo
+'''
+def dist_end(lista_geral, lista_robos):
+    if lista_vazia(lista_geral):
+        return lista_geral
+    elif lista_vazia(lista_robos):
+        return lista_robos
+    else:
+        if first_list(lista_robos) == get_ID(last_list(lista_geral)):
+            return [distPoint((0.0), get_Locate(last_list(lista_geral)))] + dist_end(lista_geral, rest_list(lista_robos))
+        else:
+            return dist_end(lista_geral[:-1], lista_robos)
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'B':
 OBJETIVO: Funcao que mostra o robo que percorreu a maior distancia
 INPUTS: a definir
 OUTPUT: A distancia e o ID do robo "mais cansado"
 '''
 def robo_maior_dist(lista_geral):
-    return retiraRepetidas(get_ID(lista_geral))
+    return dist_end(lista_geral, retira_repetidos(gera_lista_robo(lista_geral)))
 
 '''==============================================================================================================''[ 'robo3', 'robo4', 'robo3', 'robo5', 'robo5', 'robo6']
 * * * * * *
@@ -282,6 +341,7 @@ def robo_maior_dist(lista_geral):
 
 '''TESTES'''
 lista_teste = [('robo3', 1, (7, 7), 3), ('robo4', 2, (7, 5), 2), ('robo3', 3, (5, 4), 3), ('robo3', 4, (8, 1), 4), ('robo4', 5, (4, 5), 3), ('robo5', 6, (7, 7), 4), ('robo5', 7, (6, 4), 5), ('robo3', 8, (7, 2), 3), ('robo5', 9, (6, 4), 4)]
+print(get_ID(lista_teste))
 print(robo_maior_dist(lista_teste))
 
 '''
