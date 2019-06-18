@@ -269,6 +269,9 @@ def robo_maior_dist(lista_geral):
 * * * * * *
 '''
 
+
+
+
 '''==============================================================================================================''
 * * * * * *
 * PARTE D *
@@ -282,7 +285,7 @@ def robo_maior_dist(lista_geral):
 
 '''TESTES'''
 lista_teste = [('robo3', 1, (7, 7), 3), ('robo4', 2, (7, 5), 2), ('robo3', 3, (5, 4), 3), ('robo3', 4, (8, 1), 4), ('robo4', 5, (4, 5), 3), ('robo5', 6, (7, 7), 4), ('robo5', 7, (6, 4), 5), ('robo3', 8, (7, 2), 3), ('robo5', 9, (6, 4), 4)]
-print(robo_maior_dist(lista_teste))
+print(retorna_dist_pontos('robo3', lista_teste))
 
 '''
 [(id, instanteAreaAfetada, ponto, vitimasNaVisibilidade)...]
