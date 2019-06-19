@@ -319,7 +319,7 @@ def robo_maior_dist(lista_geral):
             return b
         
     lista_gerada = gera_lista_robo_alvo(first_list(reduce(maior_dist, dist_end(lista_geral, retira_repetidos(gera_lista_robo(lista_geral))))), lista_geral)
-    return (gera_lista_Locate(lista_gerada), lista_gerada[-1][1])
+    return (get_ID(lista_gerada), gera_lista_Locate(lista_gerada), lista_gerada[-1][1])
 '''==============================================================================================================''[ 'robo3', 'robo4', 'robo3', 'robo5', 'robo5', 'robo6']
 * * * * * *
 * PARTE C *
