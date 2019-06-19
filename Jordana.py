@@ -318,8 +318,8 @@ def robo_maior_dist(lista_geral):
         else:
             return b
         
-    return reduce(maior_dist, dist_end(lista_geral, retira_repetidos(gera_lista_robo(lista_geral))))
-
+    lista_gerada = gera_lista_robo_alvo(first_list(reduce(maior_dist, dist_end(lista_geral, retira_repetidos(gera_lista_robo(lista_geral))))), lista_geral)
+    return (gera_lista_Locate(lista_gerada), lista_gerada[-1][1])
 '''==============================================================================================================''[ 'robo3', 'robo4', 'robo3', 'robo5', 'robo5', 'robo6']
 * * * * * *
 * PARTE C *
@@ -344,7 +344,7 @@ def robo_maior_dist(lista_geral):
 lista_teste = [('robo3', 1, (7, 7), 3), ('robo4', 2, (7, 5), 2), ('robo3', 3, (5, 4), 3), ('robo3', 4, (8, 1), 4), ('robo4', 5, (4, 5), 3), ('robo5', 6, (7, 7), 4), ('robo5', 7, (6, 4), 5), ('robo3', 8, (7, 2), 3), ('robo5', 9, (6, 4), 4)]
 lista_rob = retira_repetidos(gera_lista_robo(lista_teste))
 print(lista_rob)
-print(gera_lista_robo_alvo('robo4', lista_teste))
+print(gera_lista_robo_alvo('robo3', lista_teste))
 print(robo_maior_dist(lista_teste))
 #print(last_list(lista_teste[:-1]))
 #print(get_Locate([last_list(lista_teste)]))
