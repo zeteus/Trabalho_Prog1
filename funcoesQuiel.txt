@@ -1,0 +1,17 @@
+getId -> primeiro elemento da primeira tupla
+getTime -> segundo elemento da primeira tupla
+getLocate -> terceiro elemento da primeira tupla
+getPeople -> quarto elemento da primeira tupla
+
+tamLista -> Tamanho da lista 
+firstList -> primeiro elemento da lista
+lastList -> ultimo elemento da lista
+secondList -> segundo elemento da lista
+restList -> lista menos o primeiro
+beginList -> lista menos o primeiro
+listaVazia -> verifica se a lista é vazia
+
+geraListaRoboAlvo -> lista com informações de so um robo (id, lista)
+geraListaRobo -> lista com todos os nomes de robo, repetindo
+geraListaTime, geraListaLocate, geraListaPeople
+retiraRepetido -> tira repetido
