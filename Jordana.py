@@ -204,7 +204,7 @@ def gera_lista_People(lista_alvo):
         if lista_vazia(lista_alvo):
             return lista_alvo
         else:
-            return [get_Peopĺe(lista_alvo)] + gera_lista_People(rest_list(lista_alvo))
+            return [get_People(lista_alvo)] + gera_lista_People(rest_list(lista_alvo))
 
 
 '''
@@ -307,20 +307,21 @@ OUTPUT: A distancia e o ID do robo "mais cansado"
 '''
 def robo_maior_dist(lista_geral):
     '''
-    FUNCAO AUXILIAR PARAMETRICA DA QUESTAO 'B':
+    FUNCAO AUXILIAR PARAMETRICA DA FUNCAO 'robo_maior_dist':
     OBJETIVO: Funcao que calcula e retorna a maior distancia junto com o robo correspondente
     INPUTS: lista com as distancias finais de cada robo e o robo correspondente
     OUTPUT: A distancia e o ID do robo
     ''' 
     def maior_dist(a, b):
-        if a[1] > b[1]:
+        if a[1] >= b[1]:
             return a
         else:
             return b
         
     lista_gerada = gera_lista_robo_alvo(first_list(reduce(maior_dist, dist_end(lista_geral, retira_repetidos(gera_lista_robo(lista_geral))))), lista_geral)
     return (get_ID(lista_gerada), gera_lista_Locate(lista_gerada), lista_gerada[-1][1])
-'''==============================================================================================================''[ 'robo3', 'robo4', 'robo3', 'robo5', 'robo5', 'robo6']
+
+'''==============================================================================================================''
 * * * * * *
 * PARTE C *
 * * * * * *
@@ -335,6 +336,61 @@ def robo_maior_dist(lista_geral):
 * * * * * *
 '''
 
+'''
+FUNCAO AUXILIAR PARAMETRICA DA QUESTAO 'D':
+OBJETIVO: Funcao que calcula e retorna a soma do numero de pessoas
+INPUTS: Uma lista 'lista_alvo' com os numeros a serem somados
+OUTPUT: O somatorio de todos os elementos da lista
+'''
+def somatorio(lista_alvo):
+    '''
+    FUNCAO AUXILIAR PARAMETRICA DA FUNCAO 'somatorio':
+    OBJETIVO: Funcao que calcula e retorna a soma entre dois numeros
+    INPUTS: Um int 'x' para o numero 1 e outro int 'y' para o numero 2
+    OUTPUT: A soma entre os dois numeros
+    '''
+    def soma(x, y):
+        return x + y
+
+    return reduce(soma, lista_alvo)
+
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DA QUESTAO 'D':
+OBJETIVO: Funcao que calcula e retorna a soma do numero de pessoas para cada robo da entrada
+INPUTS: Uma lista 'lista_robos' com os robos de entrada e outra lista 'lista_geral' com as informacoes gerais de entrada
+OUTPUT: Uma lista de tuplas com o primeiro elemento da tupla sempre indicando o ID do robo e o segundo elemento incando o total de pessoas avistadas
+'''
+def total_pessoas(lista_robos, lista_geral):
+    if lista_vazia(lista_robos):
+        return []
+    else:
+        return [(first_list(lista_robos), somatorio(gera_lista_People(gera_lista_robo_alvo(first_list(lista_robos), lista_geral))))] + total_pessoas(rest_list(lista_robos), lista_geral)
+
+
+'''
+FUNCAO PRINCIPAL PARAMETRICA QUESTAO 'D':
+OBJETIVO: Funcao que calcula e retorna o robo que mais avistou vitimas juntamente com o numero de vitimas
+INPUTS: Uma lista 'lista_geral' com as informacoes gerais de entrada
+OUTPUT: Uma tupla com o primeiro elemento da tupla sempre indicando o ID do robo e o segundo elemento incando o total de pessoas avistadas do 'robo heroi'
+'''
+def robo_heroi(lista_geral):
+    '''
+    FUNCAO AUXILIAR PARAMETRICA DA FUNCAO 'robo_heroi':
+    OBJETIVO: Funcao que calcula e retorna o maior numero de pessoas junto com o robo correspondente
+    INPUTS: lista com o numero total de pessoas avistadas de cada robo e o robo correspondente
+    OUTPUT: O total de pessoas avistadas e o ID do robo
+    ''' 
+    def maior_people(a, b):
+        if a[1] >= b[1]:
+            return a
+        else:
+            return b
+    
+    return reduce(maior_people, total_pessoas(retira_repetidos(gera_lista_robo(lista_geral)), lista_geral))
+
+
+
 # def ID_mais_vitimas():
 #     return lista_IDs
 
@@ -345,7 +401,7 @@ lista_teste = [('robo3', 1, (7, 7), 3), ('robo4', 2, (7, 5), 2), ('robo3', 3, (5
 lista_rob = retira_repetidos(gera_lista_robo(lista_teste))
 print(lista_rob)
 print(gera_lista_robo_alvo('robo3', lista_teste))
-print(robo_maior_dist(lista_teste))
+print(robo_heroi(lista_teste))
 #print(last_list(lista_teste[:-1]))
 #print(get_Locate([last_list(lista_teste)]))
 #print(robo_maior_dist(lista_teste))
