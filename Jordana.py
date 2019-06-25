@@ -265,10 +265,10 @@ INPUTS: Uma Tupla 'ponto' para o ponto da distancia, Uma lista 'lista' para a li
 OUTPUT: Retorna a distancia entre os pontos de entrada
 '''
 def distLista(ponto, lista):
-    if lista == []:
+    if lista_vazia(lista):
         return 0
-    else:
-        return distPoint(ponto, first_list(lista)) + distLista(first_list(lista), rest_list(lista[1:]))
+    else: 
+        return distPoint(ponto, first_list(lista)) + distLista(first_list(lista), rest_list(lista))
 
 
 '''
@@ -277,6 +277,7 @@ OBJETIVO: Calcula a distancia percorrida por um robo especifico
 INPUTS: Uma Lista 'l' com as informacoes do robo
 OUTPUT: Retorna a distancia percorrida
 '''
+
 def distPercorridaRobo(ID_robo_alvo, lista_geral):
     return distLista((0,0), gera_lista_Locate(gera_lista_robo_alvo(ID_robo_alvo, lista_geral)))
 
@@ -329,25 +330,12 @@ def robo_maior_dist(lista_geral):
 
 '''
 FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
-OBJETIVO: Funcao que retorna todos os pontos de um robo especifico
-INPUTS: Lista com as informacoes de um robo especifico
-OUTPUT: A distancia e uma lista com todas as ocorrencias do robo
-'''
-
-def get_all_Locates(lista):
-    if lista == []: return []
-    else: return [get_Locate(lista)] + get_all_Locates(lista[1:])
-
-'''
-FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
 OBJETIVO: Funcao que retorna organiza o formato de saida de um robo
 INPUTS: Id do robo e a lista geral
 OUTPUT: Id do robo, a distancia e a lista de pontos
 '''
 def organiza_inf_ID(ID_robo_alvo, lista_geral):
-    dist = distPercorridaRobo(ID_robo_alvo, lista_geral)
-    lista_pontos = get_all_Locates(gera_lista_robo_alvo(ID_robo_alvo, lista_geral))
-    return (ID_robo_alvo, dist, lista_pontos)
+    return (ID_robo_alvo, distPercorridaRobo(ID_robo_alvo, lista_geral), [(0,0)] + gera_lista_Locate(gera_lista_robo_alvo(ID_robo_alvo, lista_geral)))
 
 '''
 FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
@@ -356,8 +344,10 @@ INPUTS: Lista de IDs e a lista geral
 OUTPUT: Id do robo, a distancia e a lista de pontos de cada robo
 '''
 def inf_All_IDs(lista_IDs, lista_geral):
-    if lista_IDs == []: return []
-    else: return [organiza_inf_ID(lista_IDs[0], lista_geral)] + inf_All_IDs(lista_IDs[1:], lista_geral)
+    if lista_vazia(lista_IDs): 
+        return []
+    else: 
+        return [organiza_inf_ID(first_list(lista_IDs), lista_geral)] + inf_All_IDs(rest_list(lista_IDs), lista_geral)
 
 '''
 FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
@@ -367,13 +357,19 @@ OUTPUT: A lista das distâncias ordenadas
 '''
 def jordana_sort(lista):
     def ajuda_jordana(lista1, lista2):
-        if not lista1: return lista2
-        elif not lista2: return lista1
-        elif second_list(lista1[0]) <= second_list(lista2[0]): return [lista1[0]] + ajuda_jordana(lista1[1:], lista2)
-        else: return [lista2[0]] + ajuda_jordana(lista1, lista2[1:])
+        if not lista1: 
+            return lista2
+        elif not lista2: 
+            return lista1
+        elif second_list(first_list(lista1)) <= second_list(first_list(lista2)): 
+            return [first_list(lista1)] + ajuda_jordana(rest_list(lista1), lista2)
+        else: 
+            return [first_list(lista2)] + ajuda_jordana(lista1, rest_list(lista2))
 
-    if len(lista) <= 1: return lista
-    else: return ajuda_jordana(jordana_sort(lista[:len(lista)//2]),jordana_sort(lista[len(lista)//2:]))
+    if tamanho_list(lista) <= 1: 
+        return lista
+    else: 
+        return ajuda_jordana(jordana_sort(lista[:tamanho_list(lista)//2]),jordana_sort(lista[tamanho_list(lista)//2:]))
 
 '''
 FUNCAO PRINCIPAL DA QUESTAO A:
@@ -382,8 +378,7 @@ INPUTS: Uma lista geral
 OUTPUT: Retorna uma lista de tuplas em ordem crescente pelo ID.
 '''
 def ordenaPontos(lista_geral):
-    lista_IDs = retira_repetidos(gera_lista_robo(lista_geral))
-    return jordana_sort(inf_All_IDs(lista_IDs, lista_geral))
+    return jordana_sort(inf_All_IDs(retira_repetidos(gera_lista_robo(lista_geral)), lista_geral))
 
 
 '''==============================================================================================================''
