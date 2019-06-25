@@ -470,4 +470,6 @@ print(ordenaPontos(lista_teste_2))
 
 -> Um robô não pode estar em dois pontos no mesmo instante
     if (id1 == id2 and ponto1 != ponto2): intante1 tem que ser =! de instante2
+
+[('robo1', 1, (5, 8), 4), ('robo2', 2, (5, 4), 4), ('robo3', 3, (2, 2), 1), ('robo1', 4, (4, 9), 4), ('robo3', 5,(1, 3), 3), ('robo4', 6, (7, 5), 3), ('robo5', 7, (8, 6), 1), ('robo1', 8, (3, 2), 4), ('robo2', 9, (1, 8), 4)]
 '''
