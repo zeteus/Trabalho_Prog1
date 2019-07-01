@@ -351,25 +351,24 @@ def inf_All_IDs(lista_IDs, lista_geral):
 
 '''
 FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
+OBJETIVO: Funcao que coloca um elemento na lista de forma ordenada 
+INPUTS: Elemento e a lista geral
+OUTPUT: A lista com o elemento ordenado
+'''
+def ajuda_jordana(n, lista):
+    if lista_vazia(lista): return [n]
+    elif second_list(n) > second_list(first_list(lista)): return [first_list(lista)] + ajuda_jordana(n, rest_list(lista))
+    else: return [n] + lista
+
+'''
+FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
 OBJETIVO: Funcao que ordena
-INPUTS: Id do robo e a lista geral
+INPUTS: Lista geral
 OUTPUT: A lista das distâncias ordenadas
 '''
 def jordana_sort(lista):
-    def ajuda_jordana(lista1, lista2):
-        if not lista1: 
-            return lista2
-        elif not lista2: 
-            return lista1
-        elif second_list(first_list(lista1)) <= second_list(first_list(lista2)): 
-            return [first_list(lista1)] + ajuda_jordana(rest_list(lista1), lista2)
-        else: 
-            return [first_list(lista2)] + ajuda_jordana(lista1, rest_list(lista2))
-
-    if tamanho_list(lista) <= 1: 
-        return lista
-    else: 
-        return ajuda_jordana(jordana_sort(lista[:tamanho_list(lista)//2]),jordana_sort(lista[tamanho_list(lista)//2:]))
+    if lista_vazia(lista): return []
+    else: return ajuda_jordana(first_list(lista), jordana_sort(rest_list(lista)))
 
 '''
 FUNCAO PRINCIPAL DA QUESTAO A:
@@ -454,10 +453,9 @@ lista_rob = retira_repetidos(gera_lista_robo(lista_teste))
 # print(lista_rob)
 # print(gera_lista_robo_alvo('robo3', lista_teste))
 # print(robo_heroi(lista_teste))
-print(ordenaPontos(lista_teste_2))
 #print(last_list(lista_teste[:-1]))
 #print(get_Locate([last_list(lista_teste)]))
-#print(robo_maior_dist(lista_teste))
+print(robo_heroi([('robo1', 1, (1,1),4), ('robo2', 2,(1,1),4)]))
 
 '''
 [(id, instanteAreaAfetada, ponto, vitimasNaVisibilidade)...]

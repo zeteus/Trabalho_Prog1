@@ -33,7 +33,7 @@ def retorna_dist_pontos(ID_robo_alvo, lista_geral):
 
 
 def organiza_saida(ID_robo_alvo, lista_geral, dist):
-    if lista_geral = []: return []
+    if lista_geral == []: return []
     else: return (get_ID(lista_geral), dist, [get_Locate(lista_geral[0])] + organiza_saida(ID_robo_alvo, lista_geral[1:], dist))
 
 '''
@@ -99,21 +99,6 @@ def inf_All_IDs(lista_IDs, lista_geral):
     else: return [organiza_inf_ID(lista_IDs[0], lista_geral)] + inf_All_IDs(lista_IDs[1:], lista_geral)
     
 
-'''
-FUNCAO AUXILIAR PARAMETRICA DE QUESTAO 'C':
-OBJETIVO: Funcao que ordena
-INPUTS: Id do robo e a lista geral
-OUTPUT: A lista das distâncias ordenadas
-'''
-def jordana_sort(lista):
-    def ajuda_jordana(lista1, lista2):
-        if not lista1: return lista2
-        elif not lista2: return lista1
-        elif second_list(lista1[0]) <= second_list(lista2[0]): return [lista1[0]] + ajuda_jordana(lista1[1:], lista2)
-        else: return [lista2[0]] + ajuda_jordana(lista1, lista2[1:])
-
-    if len(lista) <= 1: return lista
-    else: return ajuda_jordana(jordana_sort(lista[:len(lista)//2]),jordana_sort(lista[len(lista)//2:]))
 
 '''
 FUNCAO PRINCIPAL DA QUESTAO A:
@@ -124,3 +109,18 @@ OUTPUT: Retorna uma lista de tuplas em ordem crescente pelo ID.
 def aa(lista_geral):
     lista_IDs = retira_repetidos(gera_lista_robo(lista_geral))
     return inf_All_IDs(lista_IDs, lista_geral)
+
+
+
+def jordana_sort(lista):
+
+        def ajuda_jordana(n, lista):
+        if lista == []: return [n]
+        elif n[1] > lista[0][1]: return [lista[0]] + ajuda_jordana(n, lista[1:])
+        else: return [n] + lista
+
+    if lista == []: return []
+    else: return ajuda_jordana(lista[0], jordana_sort(lista[1:]))
+
+
+print(jordana_sort([('luana', 10),('icaro', 7),('ana', 5),('cecilia', 9)]))
