@@ -277,7 +277,14 @@ OUTPUT: Retorna a distancia percorrida
 '''
 
 def distPercorridaRobo(ID_robo_alvo, lista_geral):
-    return distLista((0,0), gera_lista_Locate(gera_lista_robo_alvo(ID_robo_alvo, lista_geral)))
+    try:
+        if lista_vazia(gera_lista_robo_alvo(ID_robo_alvo, lista_geral)):
+            raise exeception()
+        else:    
+            return distLista((0,0), gera_lista_Locate(gera_lista_robo_alvo(ID_robo_alvo, lista_geral)))
+    except:
+        print('ID do robo inexistente!!')
+        pass
 
 '''==============================================================================================================''
 * * * * * *
@@ -420,23 +427,30 @@ def total_pessoas(lista_robos, lista_geral):
 FUNCAO GLOBAL PRINCIPAL PARAMETRICA QUESTAO 'D':
 OBJETIVO: Funcao que calcula e retorna o robo que mais avistou vitimas juntamente com o numero de vitimas
 INPUTS: Uma lista 'lista_geral' com as informacoes gerais de entrada
-OUTPUT: Uma tupla com o primeiro elemento da tupla sempre indicando o ID do robo e o segundo elemento incando o total de pessoas avistadas do 'robo heroi'
-OBS: Se houverem dois robos com a mesma quantidade de vitimas avistadas a saida sera o primeiro robo da ordem de entrada
+OUTPUT: Retorna o ID do robo que mais avistou, se existe mais de um robo que avistou a mesma quantidade se retorna uma lista com os IDs dos robos
 '''
 def robo_heroi(lista_geral):
     '''
     FUNCAO LOCAL AUXILIAR PARAMETRICA DA FUNCAO 'robo_heroi':
-    OBJETIVO: Funcao que calcula e retorna o robo que avistou o maior numero de pessoas
+    OBJETIVO: Funcao que calcula e retorna o(s) robo(s) que avistou(aram) o maior numero de pessoas
     INPUTS: lista com o numero total de pessoas avistadas de cada robo e o robo correspondente
-    OUTPUT: O ID do robo que avistou o maior numero de vitimas
+    OUTPUT: O ID do(s) robo(s) que avistou(aram) o maior numero de vitimas
     ''' 
     def maior_people(a, b):
-        if a[1] >= b[1]:
+        if type(a) == list:
+            return maior_people(a[1], b)
+        elif a[1] == b[1]:
+            return [a, b]
+        elif a[1] >= b[1]:
             return a
         else:
             return b
     
-    return first_list(reduce(maior_people, total_pessoas(retira_repetidos(gera_lista_robo(lista_geral)), lista_geral)))
+    robo_heroi = reduce(maior_people, total_pessoas(retira_repetidos(gera_lista_robo(lista_geral)), lista_geral))
+    if type(robo_heroi) == list:
+        return gera_lista_robo(robo_heroi)
+    else:
+        return first_list(robo_heroi)
 
 
 '''========================================= FORMATACAO DE SAIDAS ========================================='''
@@ -450,4 +464,5 @@ print(robo_maior_dist(lista))
 # QUESTAO C)
 print(ordenaPontos(lista))
 # QUESTAO D) 
+listateste = [('robo1', 1, (5, 8), 4), ('robo3', 2, (4,2), 4)] # Para testar quando o numero de pessoas for igual
 print(robo_heroi(lista))
